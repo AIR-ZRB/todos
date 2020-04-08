@@ -12,4 +12,8 @@
 
 <style>
   /* CSS */
+  #app {
+    float: left;
+    overflow: hidden;
+  }
 </style>

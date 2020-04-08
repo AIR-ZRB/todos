@@ -7,12 +7,19 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'landing-page',
-      component: require('@/components/LandingPage').default
+      redirect: '/mini'
     },
     {
-      path: '*',
-      redirect: '/'
-    }
+      path: '/index',
+      name: 'landing-page',
+      component: require('@/components/index').default
+    },
+    {
+      path: '/mini',
+      name: 'miniPage',
+      component: require('@/components/pages/listPage.vue').default
+    },
+
+  
   ]
 })
