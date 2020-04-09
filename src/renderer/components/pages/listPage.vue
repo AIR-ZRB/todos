@@ -4,14 +4,14 @@
             <router-link to="index">点击我切换形态</router-link>
         </div>
         <div class="list-title">
-            <h2>进行中</h2>
+            <h2>{{currentTitle}}</h2>
             <div>
                 <i class="el-icon-arrow-left"></i>
                 <i class="el-icon-arrow-right"></i>
             </div>
         </div>
         <listTask
-            v-for="item in falseData"
+            v-for="item in currentData"
             :key="item.title"
             :title="item.title"
             :color="item.color"
@@ -22,11 +22,13 @@
 </template>
 
 <script>
-import { _readFile,_writeFile } from "@/base.js";
+import { _readFile, _writeFile } from "@/base.js";
 export default {
     data() {
         return {
-            falseData: []
+            currentTitle: "", // 当前数据的标题
+            currentData: [], // 当前数据的数据
+            currentIndex: 0 // 当前数据的索引
         };
     },
     methods: {
@@ -34,7 +36,10 @@ export default {
     },
     created() {
         _readFile().then(data => {
-            this.falseData = data;
+            console.log(data);
+            this.currentTitle = data[this.currentIndex].listTitle;
+            this.currentData = data[this.currentIndex].data;
+            console.log(this.currentTitle);
         });
     }
 };
@@ -74,11 +79,12 @@ export default {
         justify-content: space-between;
         align-items: center;
         height: 40px;
-        margin: 0 0 10px 0;
+        margin: 0 0 5px 0;
 
         i {
             font-size: 20px;
             font-weight: 700;
+            cursor: pointer;
         }
     }
 
