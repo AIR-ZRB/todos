@@ -1,27 +1,49 @@
 [
     {
-        "title": "水无见一月",
-        "color": "skyblue",
-        "complete": true
-    },
-    {
-        "title": "白鸟留依",
-        "color": "black",
-        "complete": true
-    },
-    {
-        "title": "一条丽",
-        "color": "green",
-        "complete": true
-    },
-    {
-        "title": "月城亚乃",
-        "color": "pink",
-        "complete": false
-    },
-    {
-        "title": "今井好美",
+        "listTitle": "每天任务",
         "color": "red",
-        "complete": false
+        "data": [
+            {
+                "title": "水无见一月",
+                "color": "skyblue",
+                "complete": true
+            },
+            {
+                "title": "白鸟留依",
+                "color": "black",
+                "complete": true
+            },
+            {
+                "title": "一条丽",
+                "color": "green",
+                "complete": true
+            },
+            {
+                "title": "月城亚乃",
+                "color": "pink",
+                "complete": false
+            },
+            {
+                "title": "今井好美",
+                "color": "red",
+                "complete": false
+            }
+        ]
+    },
+    {
+        "listTitle": "4月目标",
+        "color": "green",
+        "data": [
+            {
+                "title": "生啃Jquery",
+                "color": "skyblue",
+                "complete": true
+            },
+            {
+                "title": "写项目",
+                "color": "black",
+                "complete": true
+            }
+        ]
     }
 ]

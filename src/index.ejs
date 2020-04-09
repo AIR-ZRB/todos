@@ -9,8 +9,19 @@
         require('module').globalPaths.push('<%= htmlWebpackPlugin.options.nodeModules.replace(/\\/g, '\\\\') %>')
       </script>
     <% } %>
+
+    <style>
+      /* html,body {
+        float: left;
+        overflow: hidden;
+      } */
+      html,body,#app {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
   </head>
-  <body>
+  <body style="margin: 0;">
     <div id="app"></div>
     <!-- Set `__static` path to static files in production -->
     <% if (!process.browser) { %>

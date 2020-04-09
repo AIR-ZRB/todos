@@ -7,43 +7,76 @@
                 <router-link to="/mini">
                     <i class="el-icon-sort toggle" title="切换到最小化"></i>
                 </router-link>
-                
             </el-header>
 
             <!-- 列表导航栏区域 -->
             <el-container class="index-center">
+                <!-- 左侧部分 -->
                 <el-aside width="200px" class="center-listNavigation">
                     <ul>
-                        <li class="active">
-                            <span>
-                                <i class="el-icon-s-home"></i>
-                                <span class="icon-name">home</span>
-                            </span>
-                        </li>
-
-                        <li>
-                            <span>
-                                <i class="el-icon-tickets"></i>
-                                <span class="icon-name">home</span>
-                            </span>
+                        <li
+                            v-for="(item,index) in list"
+                            :key="item.link"
+                            :class="item.active"
+                            @click="()=>{listNavigation(index)}"
+                        >
+                            <router-link :to="item.link">
+                                <span>
+                                    <i :class="item.icon"></i>
+                                    <span class="icon-name">{{item.name}}</span>
+                                </span>
+                            </router-link>
                         </li>
                     </ul>
                 </el-aside>
 
-                <!-- 主要内容部分 -->
+                <!-- 右侧主要内容部分 -->
                 <el-container class="center-content">
-                    <div class="addTask"><span>添加任务</span></div>
+                    <router-view data="ddd"></router-view>
                 </el-container>
             </el-container>
 
-            <!-- 底部 -->
-            <el-footer style="height: 40px;line-height: 40px;" class="index-footer">Footer</el-footer>
+            <!-- 编辑框 -->
+            <editTask />
         </el-container>
     </div>
 </template>
 
 <script>
-export default {};
+import { _readFile, _writeFile } from "@/base.js";
+
+export default {
+    data() {
+        return {
+            list: [
+                {
+                    active: "active",
+                    icon: "el-icon-document-copy",
+                    link: "/index/allTask",
+                    name: "任务块"
+                },
+                {
+                    active: "",
+                    icon: "el-icon-s-operation",
+                    link: "/index/detailTask",
+                    name: "详细任务"
+                }
+            ]
+        };
+    },
+    methods: {
+        listNavigation(index) {
+            this.list.forEach(Element => Element.active = "")
+            this.list[index].active = "active"
+         
+        }
+    },
+    created() {
+        _readFile().then(data => {
+            this.$store.commit("editListData", data);
+        });
+    }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -55,16 +88,12 @@ $themePadding: 10px;
     margin: 0;
     padding: 0;
 }
-body {
-    padding: 0;
-    margin: 0;
-}
 
 .index-container {
     height: 100%;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 40px 500px 50px;
+    grid-template-rows: 40px 500px;
 
     .index-header {
         background: $themeColor;
@@ -76,41 +105,32 @@ body {
 
     .index-center {
         .center-listNavigation {
-            border-right: 1px solid #000;
+            // padding: 10px;
             ul {
                 li {
                     height: 50px;
                     line-height: 50px;
                     font-size: 20px;
                     padding: 0 0 0 $themePadding;
+                    cursor: pointer;
                 }
                 li.active {
-                    color: $themeColor;
+                    background: $themeColor;
+                }
+                a {
+                    float: left;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                    color: #000;
                 }
             }
         }
 
         .center-content {
+            padding: 10px;
             padding: $themePadding;
-
-            .addTask {
-                width: 200px;
-                height: 120px;
-                line-height: 120px;
-                text-align: center;
-                font-weight: 700;
-                color: #fff;
-                border-radius: 10px;
-                background-image: linear-gradient(to right,#CCFFFF,#99CCFF);
-
-            
-            }
         }
-    }
-
-    .index-footer {
-        background: $themeColor;
-        padding: 0 0 0 $themePadding;
     }
 }
 </style>

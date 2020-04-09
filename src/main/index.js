@@ -1,4 +1,29 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu, ipcMain } from 'electron'
+
+
+const fs = require("fs");
+const path = require("path");
+
+// ipcMain.on('asynchronous-message', function(event, arg) {
+//   console.log(arg);
+//   // 这里是传给渲染进程的数据
+//   fs.readFile(path.join(__dirname,"../renderer/data/data.json"),"utf8",(err,data)=>{
+//     event.sender.send('asynchronous-reply', data);
+//   })
+// });
+
+
+
+ipcMain.on('readFile', function (event, arg) {
+  console.log(arg);
+  // 这里是传给渲染进程的数据
+  fs.readFile(path.join(__dirname, "../renderer/data/data.json"), "utf8", (err, data) => {
+    event.sender.send('readFile', data);
+  })
+});
+
+
+
 
 /**
  * Set `__static` path to static files in production
@@ -13,21 +38,30 @@ const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
 
-function createWindow () {
+function createWindow() {
   /**
    * Initial window options
    */
+
+  Menu.setApplicationMenu(null)   // 去除菜单栏
   mainWindow = new BrowserWindow({
-    height: 563,
-    useContentSize: true,
-    width: 1000
+    height: 800,
+    width: 1500,
+    transparent: true
+    // frame: false     // 去除标题栏
+
   })
 
   mainWindow.loadURL(winURL)
 
   mainWindow.on('closed', () => {
-    mainWindow = null
+    mainWindow = null;
+  
   })
+
+
+
+
 }
 
 app.on('ready', createWindow)
