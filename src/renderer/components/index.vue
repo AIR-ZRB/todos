@@ -105,7 +105,6 @@ $themePadding: 10px;
 
     .index-center {
         .center-listNavigation {
-            // padding: 10px;
             ul {
                 li {
                     height: 50px;

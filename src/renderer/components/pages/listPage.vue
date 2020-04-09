@@ -36,10 +36,10 @@ export default {
     },
     created() {
         _readFile().then(data => {
-            console.log(data);
+           
             this.currentTitle = data[this.currentIndex].listTitle;
             this.currentData = data[this.currentIndex].data;
-            console.log(this.currentTitle);
+           
         });
     }
 };
