@@ -16,11 +16,15 @@ export default new Vuex.Store({
     state: {
         listData: [],
         editTaskIsShow: true,
+        addTaskIsShow: false,
         windowSize: [1000, 1000]
     },
     mutations: {
         editTaskShow(state, step) {
             state.editTaskIsShow = step;
+        },
+        addTaskShow(state, step) {
+            state.addTaskIsShow = step;
         },
         editListData(state, step) {
             state.listData = step;

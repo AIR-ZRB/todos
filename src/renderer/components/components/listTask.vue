@@ -4,13 +4,14 @@
         <p class="task-title">{{_props.title}}</p>
         <p class="task-icon">
             <i class="el-icon-s-unfold"></i>
+            <span class="right">{{_props.time}}</span>
         </p>
     </div>
 </template>
 
 <script>
 export default {
-    props:["title","color","complete"]
+    props:["title","color","time","complete"]
 };
 </script>
 
@@ -39,6 +40,12 @@ export default {
         margin: 0;
         font-size: 24px;
         color: #c1c3ca;
+    }
+
+    .right {
+        float: right;
+        font-size: 18px;
+        color: #111;
     }
 }
 </style>

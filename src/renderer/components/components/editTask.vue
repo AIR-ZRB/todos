@@ -50,7 +50,8 @@ export default {
 
                 editData.push({
                     listTitle: this.textValue,
-                    color: "black"
+                    color: "black",
+                    data:[]
                 });
 
                 this.$store.commit("editListData", editData);

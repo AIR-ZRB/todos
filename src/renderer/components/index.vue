@@ -78,7 +78,7 @@ export default {
     mounted() {
         this.$store.commit("editWindowSize", {
             width: 900,
-            height: 800
+            height: 700
         });
     }
 };

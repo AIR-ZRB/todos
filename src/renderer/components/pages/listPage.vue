@@ -17,6 +17,7 @@
                 :title="item.title"
                 :color="item.color"
                 :complete="item.complete"
+                :time="item.time"
             />
             <footer class="list-footer" @click="dialog">添加卡</footer>
         </div>
