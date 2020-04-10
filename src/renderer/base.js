@@ -18,7 +18,7 @@ export let _readFile = ()=> {
 // 写入文件
 export let _writeFile = (data)=> {
     return new Promise((resolve,reject)=>{
-         ipcRenderer.send("writeFile", JSON.stringify("data"));
+         ipcRenderer.send("writeFile", JSON.stringify(data));
          resolve("写入成功");
     })
    

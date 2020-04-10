@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="detailTask">
         <div
             class="list"
             v-for="item in this.$store.state.listData"
@@ -20,13 +20,15 @@
 
 <script>
 export default {
-    created() {
-    
-    }
+    created() {}
 };
 </script>
 
 <style lang="scss" scoped>
+.detailTask {
+  
+}
+
 .list {
     width: 250px;
     padding: 10px;
@@ -34,6 +36,7 @@ export default {
     float: left;
     margin-right: 20px;
     border-radius: 10px;
+
     p {
         color: #fff;
     }

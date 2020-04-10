@@ -1,28 +1,31 @@
 <template>
-    <div class="list-container">
-        <div class="list-toggle">
-            <router-link to="index">点击我切换形态</router-link>
-        </div>
-        <div class="list-title">
-            <h2>{{currentTitle}}</h2>
-            <div>
-                <i class="el-icon-arrow-left"></i>
-                <i class="el-icon-arrow-right"></i>
+    <div class="list">
+        <div class="list-container" ref="list">
+            <div class="list-toggle">
+                <router-link to="index">点击我切换形态</router-link>
             </div>
+            <div class="list-title">
+                <h2>{{currentTitle}}</h2>
+                <div>
+                    <i class="el-icon-arrow-left"></i>
+                    <i class="el-icon-arrow-right"></i>
+                </div>
+            </div>
+            <listTask
+                v-for="item in currentData"
+                :key="item.title"
+                :title="item.title"
+                :color="item.color"
+                :complete="item.complete"
+            />
+            <footer class="list-footer" @click="dialog">添加卡</footer>
         </div>
-        <listTask
-            v-for="item in currentData"
-            :key="item.title"
-            :title="item.title"
-            :color="item.color"
-            :complete="item.complete"
-        />
-        <footer class="list-footer" @click="dialog">添加卡</footer>
     </div>
 </template>
 
 <script>
 import { _readFile, _writeFile } from "@/base.js";
+
 export default {
     data() {
         return {
@@ -36,50 +39,72 @@ export default {
     },
     created() {
         _readFile().then(data => {
-           
             this.currentTitle = data[this.currentIndex].listTitle;
             this.currentData = data[this.currentIndex].data;
-           
+        });
+    },
+    mounted() {
+        console.log("111" + this.$route);
+        // 设置窗口大小
+        let _this = this;
+
+        this.$store.commit("editWindowSize", {
+            // width: _this.$refs.list.offsetWidth,
+            // height: _this.$refs.list.style.height,
+            // width: 1000,
+
+            width: 320,
+            height: 580
         });
     }
 };
 </script>
 
 <style lang="scss" scoped>
-.list-container {
+.list {
     width: 300px;
-    opacity: 0.7;
-    // background: rgba(33, 33, 33, 0.5);
+    height: 580px;
+    overflow-y: scroll;
+}
+.list-container {
+    // -webkit-app-region: drag;
+
+    overflow: hidden;
+    opacity: 0.9;
     background: #e5eff5;
     border-radius: 10px;
     padding: 0 10px;
     // box-sizing: border-box;
     margin: 0;
+    // position: absolute;
 
     .list-toggle {
         height: 10px;
         text-align: center;
         margin-bottom: 10px;
+        -webkit-app-region: no-drag;
 
         cursor: pointer;
         a {
             color: transparent;
             text-decoration: none;
         }
-    }
 
-    .list-toggle:hover {
-        a {
-            color: #000;
+        &:hover {
+            a {
+                color: #000;
+            }
         }
     }
 
     .list-title {
+        -webkit-app-region: drag;
         display: flex;
         justify-content: space-between;
         align-items: center;
         height: 40px;
         margin: 0 0 5px 0;
+       
 
         i {
             font-size: 20px;

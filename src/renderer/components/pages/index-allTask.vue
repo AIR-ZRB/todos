@@ -5,7 +5,12 @@
             所有任务
         </h2>
 
-        <div class="Task" v-for="item in $store.state.listData" :key="item.listTitle" :style="{background: item.color}">
+        <div
+            class="Task"
+            v-for="item in $store.state.listData"
+            :key="item.listTitle"
+            :style="{background: item.color}"
+        >
             <span>{{item.listTitle}}</span>
         </div>
 
@@ -22,6 +27,9 @@ export default {
     },
     created() {
         // console.log(this.$store.state.listData);
+    },
+    mounted() {
+    
     }
 };
 </script>

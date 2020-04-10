@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { _readFile, _writeFile } from "@/base.js";
 export default {
     data() {
         return {
@@ -39,8 +40,9 @@ export default {
     methods: {
         close(submit) {
             if (submit === "submit") {
-                console.warn("提交");
-                //  还没写入文件-----------
+                console.log("提交");
+
+                // 引用类型
                 let editData = [];
                 this.$store.state.listData.forEach(element => {
                     editData.push(element);
@@ -53,6 +55,8 @@ export default {
 
                 this.$store.commit("editListData", editData);
                 this.textValue = "";
+                _writeFile(editData)
+
             }
 
             this.$store.commit("editTaskShow", false);

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div ref="index" class="index">
         <el-container class="index-container">
             <!-- 头部区域 -->
             <el-header style="height:40px; line-height:40px;" class="index-header">
@@ -66,14 +66,19 @@ export default {
     },
     methods: {
         listNavigation(index) {
-            this.list.forEach(Element => Element.active = "")
-            this.list[index].active = "active"
-         
+            this.list.forEach(Element => (Element.active = ""));
+            this.list[index].active = "active";
         }
     },
     created() {
         _readFile().then(data => {
             this.$store.commit("editListData", data);
+        });
+    },
+    mounted() {
+        this.$store.commit("editWindowSize", {
+            width: 900,
+            height: 800
         });
     }
 };
@@ -89,18 +94,28 @@ $themePadding: 10px;
     padding: 0;
 }
 
+.index {
+    background: #fff;
+    width: 100%;
+    height: 100%;
+}
+
 .index-container {
     height: 100%;
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 40px 500px;
+    border-radius: 15px;
 
     .index-header {
         background: $themeColor;
         padding: 0 $themePadding;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        -webkit-app-region: drag;
+
+        .toggle {
+            -webkit-app-region: no-drag;
+        }
     }
 
     .index-center {
@@ -129,6 +144,7 @@ $themePadding: 10px;
         .center-content {
             padding: 10px;
             padding: $themePadding;
+            overflow-y: scroll;
         }
     }
 }
