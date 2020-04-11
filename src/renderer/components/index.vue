@@ -3,7 +3,12 @@
         <el-container class="index-container">
             <!-- 头部区域 -->
             <el-header style="height:40px; line-height:40px;" class="index-header">
-                Todos
+                <div class="ctrl-btn">
+                    <span @click="windowClose"></span>
+                    <span @click="windowMax"></span>
+                    <span @click="windowMin"></span>
+                </div>
+
                 <router-link to="/mini">
                     <i class="el-icon-sort toggle" title="切换到最小化"></i>
                 </router-link>
@@ -44,6 +49,7 @@
 
 <script>
 import { _readFile, _writeFile } from "@/base.js";
+let ipcRenderer = require("electron").ipcRenderer;
 
 export default {
     data() {
@@ -68,9 +74,19 @@ export default {
         listNavigation(index) {
             this.list.forEach(Element => (Element.active = ""));
             this.list[index].active = "active";
+        },
+        windowClose() {
+            ipcRenderer.send("window-close");
+        },
+        windowMax() {
+            ipcRenderer.send("window-max");
+        },
+        windowMin() {
+            ipcRenderer.send("window-min");
         }
     },
     created() {
+        // 开启应用读取数据
         _readFile().then(data => {
             this.$store.commit("editListData", data);
         });
@@ -112,6 +128,28 @@ $themePadding: 10px;
         align-items: center;
         justify-content: space-between;
         -webkit-app-region: drag;
+
+        .ctrl-btn {
+            -webkit-app-region: no-drag;
+
+            span {
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                float: left;
+                margin-right: 10px;
+                background: red;
+                cursor: pointer;
+            }
+
+            span:nth-child(2) {
+                background: yellow;
+            }
+
+            span:nth-child(3) {
+                background: green;
+            }
+        }
 
         .toggle {
             -webkit-app-region: no-drag;

@@ -40,7 +40,6 @@ export default {
     methods: {
         close(submit) {
             if (submit === "submit") {
-                console.log("提交");
 
                 // 引用类型
                 let editData = [];

@@ -6,9 +6,9 @@
             </div>
             <div class="list-title">
                 <h2>{{currentTitle}}</h2>
-                <div>
-                    <i class="el-icon-arrow-left"></i>
-                    <i class="el-icon-arrow-right"></i>
+                <div class="ctrl-toggle">
+                    <i class="el-icon-arrow-left" @click="()=>{toggleList('left')}"></i>
+                    <i class="el-icon-arrow-right" @click="()=>{toggleList('right')}"></i>
                 </div>
             </div>
             <listTask
@@ -19,7 +19,7 @@
                 :complete="item.complete"
                 :time="item.time"
             />
-            <footer class="list-footer" @click="dialog">添加卡</footer>
+            <!-- <footer class="list-footer" @click="dialog">添加卡</footer> -->
         </div>
     </div>
 </template>
@@ -30,22 +30,43 @@ import { _readFile, _writeFile } from "@/base.js";
 export default {
     data() {
         return {
+            allData: "",
             currentTitle: "", // 当前数据的标题
             currentData: [], // 当前数据的数据
-            currentIndex: 0 // 当前数据的索引
+            currentIndex: 0, // 当前数据的索引
+            disable: false
         };
     },
     methods: {
-        dialog() {}
+        dialog() {},
+        // 左右切换
+        toggleList(direction) {
+            if (direction === "left") {
+                this.currentIndex < 1
+                    ? (this.currentIndex = 0)
+                    : (this.currentIndex -= 1);
+            } else {
+                this.currentIndex >= this.allData.length - 1
+                    ? (this.currentIndex = this.allData.length - 1)
+                    : (this.currentIndex = this.currentIndex + 1);
+            }
+        }
+    },
+    watch: {
+        currentIndex() {
+            this.currentTitle = this.allData[this.currentIndex].listTitle;
+            this.currentData = this.allData[this.currentIndex].data;
+        }
     },
     created() {
         _readFile().then(data => {
-            this.currentTitle = data[this.currentIndex].listTitle;
-            this.currentData = data[this.currentIndex].data;
+            this.$store.commit("editListData", data);
+            this.allData = data;
+            this.currentTitle = this.allData[this.currentIndex].listTitle;
+            this.currentData = this.allData[this.currentIndex].data;
         });
     },
     mounted() {
-        console.log("111" + this.$route);
         // 设置窗口大小
         let _this = this;
 
@@ -55,6 +76,7 @@ export default {
             // width: 1000,
 
             width: 320,
+            // width: 1000,
             height: 580
         });
     }
@@ -105,9 +127,9 @@ export default {
         align-items: center;
         height: 40px;
         margin: 0 0 5px 0;
-       
 
         i {
+            -webkit-app-region: no-drag;
             font-size: 20px;
             font-weight: 700;
             cursor: pointer;

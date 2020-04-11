@@ -4,23 +4,27 @@
         <el-input v-model="title" placeholder="请输入内容"></el-input>
         <p>请选择开始事件和结束时间</p>
         <div class="selectTime">
-            <el-time-picker
+            <el-time-select
+                placeholder="起始时间"
                 v-model="startTime"
                 :picker-options="{
-      selectableRange: '00:00:00 - 23:00:00'
-    }"
-                placeholder="任意时间点"
-            ></el-time-picker>
-
-            <el-time-picker
+                    start: '08:00',
+                    step: '00:30',
+                    end: '23:00'
+                    }"
+            ></el-time-select>
+            <el-time-select
+                placeholder="结束时间"
                 v-model="endTime"
                 :picker-options="{
-      selectableRange: '00:00:00 - 23:00:00'
-    }"
-                placeholder="任意时间点"
-            ></el-time-picker>
+                    start: '08:00',
+                    step: '00:30',
+                    end: '23:00',
+                    minTime: startTime
+                    }"
+            ></el-time-select>
         </div>
-        <el-button type="success" style="float:right" @click="addTask">成功按钮</el-button>
+        <el-button type="success" style="float:right" @click="addTask">添加</el-button>
     </div>
 </template>
 
@@ -36,7 +40,6 @@ export default {
     },
     methods: {
         addTask() {
-            console.log(this._props.index);
             let index = this._props.index;
             let addBeforeData = [];
             let color = [
@@ -54,7 +57,7 @@ export default {
                 title: this.title,
                 complete: false,
                 color: color[Number.parseInt(Math.random() * color.length)],
-                time: `${this.startTime.getHours()}:${this.startTime.getMinutes()}~${this.endTime.getHours()}:${this.endTime.getMinutes()}`
+                time: `${this.startTime}~${this.endTime}`
             };
 
             // 单条数据
@@ -67,15 +70,13 @@ export default {
                 allData.push(element);
             });
 
-            
-            addBeforeData = JSON.parse(JSON.stringify(getData))
+            addBeforeData = JSON.parse(JSON.stringify(getData));
 
             addBeforeData.data.push(addData);
             allData[index] = addBeforeData;
-    
-            this.$store.commit("editListData",allData);
-           _writeFile(allData)
-            // console.log(addBeforeData);
+
+            this.$store.commit("editListData", allData);
+            _writeFile(allData);
         }
     },
     props: ["index"]

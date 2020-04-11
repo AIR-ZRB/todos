@@ -30,6 +30,35 @@ ipcMain.on('writeFile', function (event, arg) {
 });
 
 
+ipcMain.on('window-min', function() {
+  mainWindow.minimize();
+})
+//接收最大化命令
+ipcMain.on('window-max', function() {
+  if (mainWindow.isMaximized()) {
+      mainWindow.restore();
+  } else {
+      mainWindow.maximize();
+  }
+})
+//接收关闭命令
+ipcMain.on('window-close', function() {
+  mainWindow.close();
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Set `__static` path to static files in production

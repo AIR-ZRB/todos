@@ -24,12 +24,6 @@
 export default {
     data() {
         return {};
-    },
-    created() {
-        // console.log(this.$store.state.listData);
-    },
-    mounted() {
-    
     }
 };
 </script>
